@@ -31,11 +31,15 @@ class SymmtricCipher(Fernet, BaseCipher):
 
     **中文文档**
 
-    对称加密算法
+    对称加密器。
     """
+    
     _encrypt_chunk_size = 1024 * 1024  # 1 MB
     _decrypt_chunk_size = 1398200  # 1.398 MB
-
+    """Symmtric algorithm needs to break big files in small chunk, and encrypt
+    them one by one, and concatenate them at the end. Each chunk has a fixed 
+    size. That's what these two attributes for.
+    """
     def __init__(self, password=None):
         if password:
             fernet_key = self.any_text_to_fernet_key(password)
@@ -44,6 +48,8 @@ class SymmtricCipher(Fernet, BaseCipher):
             self.input_password()
 
     def any_text_to_fernet_key(self, text):
+        """Convert any text to a fernet key for encryption.
+        """
         md5 = hashes.fingerprint.of_text(text)
         fernet_key = base64.b64encode(md5.encode("utf-8"))
         return fernet_key
@@ -67,11 +73,15 @@ class SymmtricCipher(Fernet, BaseCipher):
         return {"_encrypt_chunk_size": self._encrypt_chunk_size,
                 "_decrypt_chunk_size": self._decrypt_chunk_size, }
 
-    def encrypt(self, content):
-        return super(SymmtricCipher, self).encrypt(content)
+    def encrypt(self, binary):
+        """Encrypt binary data.
+        """
+        return super(SymmtricCipher, self).encrypt(binary)
 
-    def decrypt(self, content):
+    def decrypt(self, binary):
+        """Decrypt binary data.
+        """
         try:
-            return super(SymmtricCipher, self).decrypt(content)
+            return super(SymmtricCipher, self).decrypt(binary)
         except:
             raise PasswordError("Opps, wrong magic word!")

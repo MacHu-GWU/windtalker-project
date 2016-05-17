@@ -29,6 +29,10 @@ class AsymmetricCipher(BaseCipher):
     :param my_pubkey: your public key
     :param my_privkey: your private key
     :param his_pubkey: other's public key you use to encrypt message
+    
+    **中文文档**
+    
+    非对称加密器。
     """
     # key length/max length msg, 512/53, 1024/117, 2045/245
     _encrypt_chunk_size = 53
@@ -46,36 +50,38 @@ class AsymmetricCipher(BaseCipher):
         pubkey, privkey = rsa.newkeys(nbits, poolsize=1)
         return pubkey, privkey
 
-    def encrypt(self, content, use_sign=True):
-        """Encrypt
+    def encrypt(self, binary, use_sign=True):
+        """Encrypt binary data.
 
         **中文文档**
 
         - 发送消息时只需要对方的pubkey
         - 如需使用签名, 则双方都需要持有对方的pubkey 
         """
-        token = rsa.encrypt(content, self.his_pubkey)  # encrypt it
+        token = rsa.encrypt(binary, self.his_pubkey)  # encrypt it
         if use_sign:
-            self.sign = rsa.sign(content, self.my_privkey, "SHA-1")  # sign it
+            self.sign = rsa.sign(binary, self.my_privkey, "SHA-1")  # sign it
         return token
 
     def decrypt(self, token, signature=None):
-        """
+        """Decrypt binary data.
 
         **中文文档**
 
         - 接收消息时只需要自己的privkey
         - 如需使用签名, 则双方都需要持有对方的pubkey
         """
-        content = rsa.decrypt(token, self.my_privkey)
+        binary = rsa.decrypt(token, self.my_privkey)
         if signature:
-            rsa.verify(content, signature, self.his_pubkey)
-        return content
+            rsa.verify(binary, signature, self.his_pubkey)
+        return binary
 
     def encrypt_file(self, path, output_path=None,
                      overwrite=False,
                      enable_verbose=True):
-        """RSA for big file encryption is very slow. For big file, use 
+        """Encrypt a file using rsa.
+        
+        RSA for big file encryption is very slow. For big file, use 
         symmetric encryption and use RSA to encrypt the password please.
         """
         path = os.path.abspath(path)
@@ -94,7 +100,7 @@ class AsymmetricCipher(BaseCipher):
     def decrypt_file(self, path, output_path=None,
                      overwrite=False,
                      enable_verbose=True):
-        """
+        """Decrypt a file using rsa.
         """
         path = os.path.abspath(path)
 

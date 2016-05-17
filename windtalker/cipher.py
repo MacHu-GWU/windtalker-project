@@ -57,14 +57,18 @@ class BaseCipher(object):
         return self.decrypt(binary, *args, **kwargs)
 
     def encrypt_text(self, text, *args, **kwargs):
-        """input: unicode str, output: unicode str
+        """Encrypt a string.
+        
+        input: unicode str, output: unicode str
         """
         b = text.encode("utf-8")
         token = self.encrypt(b, *args, **kwargs)
         return base64.b64encode(token).decode("utf-8")
 
     def decrypt_text(self, text, *args, **kwargs):
-        """input: unicode str, output: unicode str
+        """Decrypt a string.
+        
+        input: unicode str, output: unicode str
         """
         b = text.encode("utf-8")
         token = base64.b64decode(b)

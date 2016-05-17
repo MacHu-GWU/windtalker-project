@@ -9,6 +9,7 @@
 
    	Using symmetric encryption <symmetric.rst>
    	Using asymmetric encryption <asymmetric.rst>
+   	Create your own encrypt algorithm <extend.rst>
 
 .. include:: about.rst
 
