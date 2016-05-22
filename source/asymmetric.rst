@@ -2,18 +2,22 @@
 
 Using asymmetric encryption
 ===============================================================================
-All symmetric encryption algorithm has a inevitable problem. It's very hard to find a ONE HANDRED PERCENT SAFE WAY to send your secret key to your receiver. Asymmetric encryption doesn't have this problem. If you don't familiar with asymmetric encryption algorithm, you may need to figure out the basic idea of **why it's safe to use public key for encryption, and how to sign your message to avoid mid-man attack**; Read this: https://en.wikipedia.org/wiki/RSA_(cryptosystem)
+All symmetric encryption algorithm has a inevitable problem. It's very hard to find a **ONE HANDRED PERCENT SAFE WAY to send your secret key to your receiver**. Asymmetric encryption doesn't have this problem. If you don't familiar with asymmetric encryption algorithm, you may need to figure out the basic idea of **why it's safe to use public key for encryption, and how to sign your message to avoid mid-man attack**; Read this: https://en.wikipedia.org/wiki/RSA_(cryptosystem)
 
-Now, let's take a look at how it's done in this example. You want to send a encrypted message to your friend **Bob** using a unsafe message channel.
+Now, let's take a look at how it's done in this example. You want to send a encrypted message to your friend **Bob** using a unsafe channel.
 
 
-Generate a key pair
+Encrypt/Decrypt a Message
 -------------------------------------------------------------------------------
+**Generate a key pair**:
+
 For demonstration purpose, you are the **A**, and your friend Bob is **B**. First, you both need to generate a private-public key pair, and share your own public key to each other. There's no problem if public key exposed to others::
 
 	>>> from windtalker.asymmetric import AsymmetricCipher
 	>>> A_pubkey, A_privkey = AsymmetricCipher.newkeys() # send A_pubkey to Bob
 	>>> B_pubkey, B_privkey = AsymmetricCipher.newkeys() # get B_pubkey from Bob
+
+**Encrypt and Decrypt**:
 
 This code is a view from your side::
 
