@@ -1,43 +1,49 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
+from pathlib_mate import Path
 
 
 default_surfix = "-encrypted"  # windtalker secret
 
 
-def get_encrypted_file_path(original_path, surfix=default_surfix):
-    """Find the output encrypted file path(by adding a surfix).
+def get_encrpyted_path(original_path, surfix=default_surfix):
+    r"""
+    Find the output encrypted file /dir path (by adding a surfix).
 
-    Example: ``test.txt -> test-wtscrt.txt``
+    Example:
+
+    - ``C:\test.txt`` -> ``C:\test-encrypted.txt``
+    - ``C:\Users\admin\Documents`` -> ``C:\Users\admin\Documents-encrypted``
     """
-    abspath = os.path.abspath(original_path)
-    fname, ext = os.path.splitext(abspath)
-    fname = fname + surfix
-    return fname + ext
-
-
-def get_encrypted_dir_path(original_path, surfix=default_surfix):
-    """Find the output encrypted dir path(by adding a surfix).
-
-    Example: ``test -> test-wtscrt``
-    """
-    abspath = os.path.abspath(original_path)
-    return abspath + surfix
+    p = Path(original_path).absolute()
+    encrypted_p = p.change(new_fname=p.fname + surfix)
+    return encrypted_p.abspath
 
 
 def recover_path(encrypted_path, surfix=default_surfix):
-    """Find the original path of encrypted file or dir.
+    r"""
+    Find the original path of encrypted file or dir.
 
-    Example: ``test-wtscrt.txt -> test.txt``
+    Example:
+
+    - ``C:\test-encrypted.txt`` -> ``C:\test.txt``
+    - ``C:\Users\admin\Documents-encrypted`` -> ``C:\Users\admin\Documents``
     """
-    return encrypted_path.replace(surfix, "")
+    surfix_reversed = surfix[::-1]
+
+    p = Path(encrypted_path).absolute()
+    fname = p.fname
+    fname_reversed = fname[::-1]
+    new_fname = fname_reversed.replace(surfix_reversed, "", 1)[::-1]
+    decrypted_p = p.change(new_fname=new_fname)
+    return decrypted_p.abspath
 
 
 def transform(src, dst, converter,
               overwrite=False, stream=True, chunksize=1024**2, **kwargs):
-    """A file stream transform IO utility function.
+    """
+    A file stream transform IO utility function.
 
     :param src: original file path
     :param dst: destination file path
@@ -47,9 +53,9 @@ def transform(src, dst, converter,
       be specified.
     :param chunksize: default 1MB
     """
-    if not overwrite:
-        if os.path.exists(dst):
-            raise FileExistsError("'%s' already exists!" % dst)
+    if not overwrite:  # pragma: no cover
+        if Path(dst).exists():
+            raise EnvironmentError("'%s' already exists!" % dst)
 
     with open(src, "rb") as f_input:
         with open(dst, "wb") as f_output:
@@ -67,24 +73,5 @@ def transform(src, dst, converter,
                         f_output.write(converter(content, **kwargs))
                     else:
                         break
-            else:
+            else:  # pragma: no cover
                 f_output.write(converter(f_input.read(), **kwargs))
-
-
-#--- Unittest ---
-if __name__ == "__main__":
-    org = __file__
-    dst = get_encrypted_file_path(org)
-    print(recover_path(dst))
-
-    org = os.getcwd()
-    dst = get_encrypted_dir_path(org)
-    print(recover_path(dst))
-
-    src = "__init__.py"
-    dst = "__init__-Backup.py"
-
-    def converter(content):
-        return content
-
-    transform(src, dst, converter, overwrite=True, stream=False)

@@ -1,3 +1,9 @@
+# User Settings
+windtalker_venv/
+windtalker.egg-info/
+windtalker-*/
+index.rst
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

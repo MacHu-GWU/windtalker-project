@@ -12,13 +12,16 @@ from windtalker import files
 
 
 class BaseCipher(object):
-    """Base cipher class.
-
-    Any cipher utility class that using any encryption algorithm can be 
-    inherited from this base class. The only method you need to implement is 
-    :meth:`BaseCipher.encrypt` and :meth:`BaseCipher.decrypt`. Because once you
-    can encrypt binary data, then you can encrypt text, file, and directory.  
     """
+    Base cipher class.
+
+    Any cipher utility class that using any encryption algorithm can be
+    inherited from this base class. The only method you need to implement is
+    :meth:`BaseCipher.encrypt` and :meth:`BaseCipher.decrypt`. Because once you
+    can encrypt binary data, then you can encrypt text, file, and directory.
+    """
+    _encrypt_chunk_size = 1024
+    _decrypt_chunk_size = 1024
 
     def b64encode_str(self, text):
         """base64 encode a text, return string also.
@@ -32,7 +35,7 @@ class BaseCipher(object):
 
     def encrypt(self, binary, *args, **kwargs):
         """Overwrite this method using your encrypt algorithm.
-        
+
         :param binary: binary data you need to encrypt
         :return: encrypted_binary, encrypted binary data
         """
@@ -40,25 +43,28 @@ class BaseCipher(object):
 
     def decrypt(self, binary, *args, **kwargs):
         """Overwrite this method using your decrypt algorithm.
-        
+
         :param binary: binary data you need to decrypt
         :return: decrypted_binary, decrypted binary data
         """
         raise NotImplementedError
 
     def encrypt_binary(self, binary, *args, **kwargs):
-        """input: bytes, output: bytes
+        """
+        input: bytes, output: bytes
         """
         return self.encrypt(binary, *args, **kwargs)
 
     def decrypt_binary(self, binary, *args, **kwargs):
-        """input: bytes, output: bytes
+        """
+        input: bytes, output: bytes
         """
         return self.decrypt(binary, *args, **kwargs)
 
     def encrypt_text(self, text, *args, **kwargs):
-        """Encrypt a string.
-        
+        """
+        Encrypt a string.
+
         input: unicode str, output: unicode str
         """
         b = text.encode("utf-8")
@@ -66,8 +72,9 @@ class BaseCipher(object):
         return base64.b64encode(token).decode("utf-8")
 
     def decrypt_text(self, text, *args, **kwargs):
-        """Decrypt a string.
-        
+        """
+        Decrypt a string.
+
         input: unicode str, output: unicode str
         """
         b = text.encode("utf-8")
@@ -98,11 +105,11 @@ class BaseCipher(object):
         path = os.path.abspath(path)
 
         if not output_path:
-            output_path = files.get_encrypted_file_path(path)
+            output_path = files.get_encrpyted_path(path)
 
-        if not overwrite:
+        if not overwrite:  # pragma: no cover
             if os.path.exists(output_path):
-                raise FileExistsError(
+                raise EnvironmentError(
                     "output path '%s' already exists.." % output_path)
 
         self._show("Encrypt '%s' ..." % path, enable_verbose=enable_verbose)
@@ -133,9 +140,9 @@ class BaseCipher(object):
         if not output_path:
             output_path = files.recover_path(path)
 
-        if not overwrite:
+        if not overwrite:  # pragma: no cover
             if os.path.exists(output_path):
-                raise FileExistsError(
+                raise EnvironmentError(
                     "output path '%s' already exists.." % output_path)
 
         self._show("Decrypt '%s' ..." % path, enable_verbose=enable_verbose)
@@ -151,7 +158,7 @@ class BaseCipher(object):
                     stream=True,
                     enable_verbose=True):
         """Encrypt everything in a directory.
-        
+
         :param path: path of the dir you need to encrypt
         :param output_path: encrypted dir output path
         :param overwrite: if True, then silently overwrite output file if exists
@@ -162,11 +169,11 @@ class BaseCipher(object):
         path = os.path.abspath(path)
 
         if not output_path:
-            output_path = files.get_encrypted_file_path(path)
+            output_path = files.get_encrpyted_path(path)
 
-        if not overwrite:
+        if not overwrite:  # pragma: no cover
             if os.path.exists(output_path):
-                raise FileExistsError(
+                raise EnvironmentError(
                     "output path '%s' already exists.." % output_path)
 
         self._show("--- Encrypt directory '%s' ---" % path,
@@ -191,7 +198,7 @@ class BaseCipher(object):
                     stream=True,
                     enable_verbose=True):
         """Decrypt everything in a directory.
-        
+
         :param path: path of the dir you need to decrypt
         :param output_path: decrypted dir output path
         :param overwrite: if True, then silently overwrite output file if exists
@@ -204,9 +211,9 @@ class BaseCipher(object):
         if not output_path:
             output_path = files.recover_path(path)
 
-        if not overwrite:
+        if not overwrite:  # pragma: no cover
             if os.path.exists(output_path):
-                raise FileExistsError(
+                raise EnvironmentError(
                     "output path '%s' already exists.." % output_path)
 
         self._show("--- Decrypt directory '%s' ---" % path,

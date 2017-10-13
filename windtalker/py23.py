@@ -19,22 +19,3 @@ else:
     pk_protocol = 2
     is_py2 = True
     is_py3 = False
-    
-if __name__ == "__main__":
-    import unittest
-    
-    class Unittest(unittest.TestCase):
-        def test_all(self):
-            s = "text" # unicode string
-            b = s.encode("utf-8") # bytes
-            i = 32 # integer
-            i_long = 1000000000000 # long integer
-            f = 3.14 # float
-            
-            self.assertIsInstance(s, str_type)
-            self.assertIsInstance(b, bytes)
-            self.assertIsInstance(i, int_type)
-            self.assertIsInstance(i_long, int_type)
-            self.assertIsInstance(f, float)
-            
-    unittest.main()

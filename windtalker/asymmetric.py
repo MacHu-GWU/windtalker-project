@@ -17,21 +17,21 @@ from rsa.bigfile import *
 
 from windtalker.cipher import BaseCipher
 from windtalker.exc import PasswordError
-from windtalker import hashes
+from windtalker import fingerprint
 from windtalker import files
 from windtalker import py23
 
 
 class AsymmetricCipher(BaseCipher):
-    """A asymmtric encryption algorithm utility class helps you easily 
+    """A asymmtric encryption algorithm utility class helps you easily
     encrypt/decrypt text and files.
 
     :param my_pubkey: your public key
     :param my_privkey: your private key
     :param his_pubkey: other's public key you use to encrypt message
-    
+
     **中文文档**
-    
+
     非对称加密器。
     """
     # key length/max length msg, 512/53, 1024/117, 2045/245
@@ -56,7 +56,7 @@ class AsymmetricCipher(BaseCipher):
         **中文文档**
 
         - 发送消息时只需要对方的pubkey
-        - 如需使用签名, 则双方都需要持有对方的pubkey 
+        - 如需使用签名, 则双方都需要持有对方的pubkey
         """
         token = rsa.encrypt(binary, self.his_pubkey)  # encrypt it
         if use_sign:
@@ -80,8 +80,8 @@ class AsymmetricCipher(BaseCipher):
                      overwrite=False,
                      enable_verbose=True):
         """Encrypt a file using rsa.
-        
-        RSA for big file encryption is very slow. For big file, use 
+
+        RSA for big file encryption is very slow. For big file, use
         symmetric encryption and use RSA to encrypt the password please.
         """
         path = os.path.abspath(path)
