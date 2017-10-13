@@ -120,6 +120,8 @@ class BaseCipher(object):
         self._show("    Finished! Elapse %.6f seconds" % (time.clock() - st,),
                    enable_verbose=enable_verbose)
 
+        return output_path
+
     def decrypt_file(self, path, output_path=None,
                      overwrite=False,
                      stream=True,
@@ -152,6 +154,8 @@ class BaseCipher(object):
                         chunksize=self._decrypt_chunk_size)
         self._show("    Finished! Elapse %.6f seconds" % (time.clock() - st,),
                    enable_verbose=enable_verbose)
+
+        return output_path
 
     def encrypt_dir(self, path, output_path=None,
                     overwrite=False,
@@ -192,6 +196,7 @@ class BaseCipher(object):
                                   enable_verbose=enable_verbose)
         self._show("Complete! Elapse %.6f seconds" % (time.clock() - st,),
                    enable_verbose=enable_verbose)
+        return output_path
 
     def decrypt_dir(self, path, output_path=None,
                     overwrite=False,
@@ -232,3 +237,5 @@ class BaseCipher(object):
                                   enable_verbose=enable_verbose)
         self._show("Complete! Elapse %.6f seconds" % (time.clock() - st,),
                    enable_verbose=enable_verbose)
+
+        return output_path

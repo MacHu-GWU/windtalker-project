@@ -24,6 +24,21 @@ In World War II, US Marine specially recruited a lots of bilingual Navajo speake
 
 ``windtalker`` is a utility tools built on top of `cryptography <https://pypi.python.org/pypi/cryptography>`_ and `rsa <https://pypi.python.org/pypi/rsa>`_. With this, **you can encrypt/decrypt binary data, text, files or even a entire directory in single line of code**! It support both symmetry and asymmetry encryption algorithm. For usage, you should start from `HERE <http://www.wbh-doc.com.s3.amazonaws.com/windtalker/index.html#id5>`_
 
+Example (SymmtricCipher):
+
+.. code-block:: python
+
+    >>> from windtalker import SymmtricCipher
+    >>> c = SymmtricCipher(password="password") # Fernet encrypter
+    >>> c.encrypt_text("Hello")
+    Z0FBQUFBQlo0VHpVVjdWR0xCb0VEc0dMVUxib25jZEwzTWZ1UC1raFVmWndwNERrTmZVR1hNdzE3ZS05RWkwWXBrTi1adUhRWTNWYkxUT1Vkekh3MlVVcHZXLWxaMWMyOEE9PQ==
+
+    >>> c.encrypt_file(r"C:\test.py") # c.decrypt_file(xxx) for decryption
+    C:\test-encrypted.py
+
+    >>> c.encrypt_dir(r"C:\User\Admin\Document") # c.decrypt_dir(xxx) for decryption
+    C:\User\Admin\Document-encrypted.py
+
 
 Quick Links
 ------------------------------------------------------------------------------

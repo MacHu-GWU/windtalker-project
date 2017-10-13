@@ -10,3 +10,11 @@ __author_email__ = "husanhe@gmail.com"
 __maintainer__ = "Sanhe Hu"
 __maintainer_email__ = "husanhe@gmail.com"
 __github_username__ = "MacHu-GWU"
+
+
+try:
+    from .asymmetric import AsymmetricCipher
+    from .symmetric import SymmtricCipher
+    from .cipher import BaseCipher
+except ImportError:  # pragma: no cover
+    pass
