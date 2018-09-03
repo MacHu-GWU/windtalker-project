@@ -22,14 +22,14 @@ Welcome to ``windtalker`` Documentation
 
 In World War II, US Marine specially recruited a lots of bilingual Navajo speakers to serve in their standard communications units in the Pacific Theater. These Navajo transmitted tactical messages over military telephone or radio communications nets using formal or informally developed codes built upon their native languages. These people, we call them --- **Wind Talker**
 
-``windtalker`` is a utility tools built on top of `cryptography <https://pypi.python.org/pypi/cryptography>`_ and `rsa <https://pypi.python.org/pypi/rsa>`_. With this, **you can encrypt/decrypt binary data, text, files or even a entire directory in single line of code**! It support both symmetry and asymmetry encryption algorithm. For usage, you should start from `HERE <http://www.wbh-doc.com.s3.amazonaws.com/windtalker/index.html#id5>`_
+``windtalker`` is a utility tools built on top of `cryptography <https://pypi.python.org/pypi/cryptography>`_ and `rsa <https://pypi.python.org/pypi/rsa>`_. With this, **you can encrypt/decrypt binary data, text, files or even a entire directory in single line of code**! It support both symmetry and asymmetry encryption algorithm. For usage, you should start from `HERE <https://windtalker.readthedocs.io/index.html#id5>`_
 
 Example (SymmtricCipher):
 
 .. code-block:: python
 
-    >>> from windtalker import SymmtricCipher
-    >>> c = SymmtricCipher(password="password") # Fernet encrypter
+    >>> from windtalker import SymmetricCipher
+    >>> c = SymmetricCipher(password="password") # Fernet encrypter
     >>> c.encrypt_text("Hello")
     Z0FBQUFBQlo0VHpVVjdWR0xCb0VEc0dMVUxib25jZEwzTWZ1UC1raFVmWndwNERrTmZVR1hNdzE3ZS05RWkwWXBrTi1adUhRWTNWYkxUT1Vkekh3MlVVcHZXLWxaMWMyOEE9PQ==
 
@@ -39,15 +39,27 @@ Example (SymmtricCipher):
     >>> c.encrypt_dir(r"C:\User\Admin\Document") # c.decrypt_dir(xxx) for decryption
     C:\User\Admin\Document-encrypted.py
 
+**HARDCODE YOUR PASSWORD IN YOUR CODE IS DANGEROUS!**:
+
+You can create a ``.windtalker`` text file in your ${HOME} directory. and put your secret password in it. ``windtalker.SymmetricCipher`` can automatically read password from it.
+
+${HOME} directory:
+
+- Windows: C:\Users\<username>
+- MacOS: /Users/<username>
+- Linux: /home/<username>
+
+For more features and how to use RSA to encrypt your file or directory, please read `THIS <https://windtalker.readthedocs.io/index.html#id5>`_
+
 
 Quick Links
 ------------------------------------------------------------------------------
 
 - .. image:: https://img.shields.io/badge/Link-Document-red.svg
-      :target: http://www.wbh-doc.com.s3.amazonaws.com/windtalker/index.html
+      :target: https://windtalker.readthedocs.io/index.html
 
 - .. image:: https://img.shields.io/badge/Link-API_Reference_and_Source_Code-red.svg
-      :target: http://www.wbh-doc.com.s3.amazonaws.com/windtalker/py-modindex.html
+      :target: https://windtalker.readthedocs.io/py-modindex.html
 
 - .. image:: https://img.shields.io/badge/Link-Install-red.svg
       :target: `install`_

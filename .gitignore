@@ -3,6 +3,9 @@ windtalker_venv/
 windtalker.egg-info/
 windtalker-*/
 index.rst
+MySecretFolder-encrypted
+MySecretFolder-decrypted
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

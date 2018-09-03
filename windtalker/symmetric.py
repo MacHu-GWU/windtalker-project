@@ -4,9 +4,8 @@
 from __future__ import print_function, unicode_literals
 
 import base64
-
+from pathlib_mate import Path
 from cryptography.fernet import Fernet
-
 from windtalker.cipher import BaseCipher
 from windtalker.exc import PasswordError
 from windtalker import fingerprint
@@ -14,6 +13,13 @@ from windtalker import py23
 
 if py23.is_py2:
     input = raw_input
+
+HOME_DIR = Path.home()
+WINDTALKER_CONFIG_FILE = Path(HOME_DIR, ".windtalker")
+
+
+def read_windtalker_password():  # pragma: no cover
+    return WINDTALKER_CONFIG_FILE.read_text(encoding="utf-8").strip()
 
 
 class SymmetricCipher(Fernet, BaseCipher):
@@ -42,7 +48,10 @@ class SymmetricCipher(Fernet, BaseCipher):
             fernet_key = self.any_text_to_fernet_key(password)
             super(SymmetricCipher, self).__init__(fernet_key)
         else:  # pragma: no cover
-            self.input_password()
+            if WINDTALKER_CONFIG_FILE.exists():
+                self.set_password(read_windtalker_password())
+            else:
+                self.input_password()
 
     def any_text_to_fernet_key(self, text):
         """
