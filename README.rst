@@ -22,7 +22,7 @@ Welcome to ``windtalker`` Documentation
 
 In World War II, US Marine specially recruited a lots of bilingual Navajo speakers to serve in their standard communications units in the Pacific Theater. These Navajo transmitted tactical messages over military telephone or radio communications nets using formal or informally developed codes built upon their native languages. These people, we call them --- **Wind Talker**
 
-``windtalker`` is a utility tools built on top of `cryptography <https://pypi.python.org/pypi/cryptography>`_ and `rsa <https://pypi.python.org/pypi/rsa>`_. With this, **you can encrypt/decrypt binary data, text, files or even a entire directory in single line of code**! It support both symmetry and asymmetry encryption algorithm. For usage, you should start from `HERE <https://windtalker.readthedocs.io/index.html#id5>`_
+``windtalker`` is a utility tools built on top of `cryptography <https://pypi.python.org/pypi/cryptography>`_ and `rsa <https://pypi.python.org/pypi/rsa>`_. With this, **you can encrypt/decrypt binary data, text, files or even a entire directory in single line of code**! It support both symmetry and asymmetry encryption algorithm. For usage, you should start from `HERE <https://windtalker.readthedocs.io/index.html#table-of-content>`_
 
 Example (SymmtricCipher):
 
@@ -49,7 +49,7 @@ ${HOME} directory:
 - MacOS: /Users/<username>
 - Linux: /home/<username>
 
-For more features and how to use RSA to encrypt your file or directory, please read `THIS <https://windtalker.readthedocs.io/index.html#id5>`_
+For more features and how to use RSA to encrypt your file or directory, please read `THIS <https://windtalker.readthedocs.io/index.html#table-of-content>`_
 
 
 Quick Links
