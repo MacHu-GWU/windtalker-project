@@ -3,9 +3,6 @@
 
 from __future__ import print_function, unicode_literals
 
-import io
-import os
-import time
 import base64
 
 from cryptography.fernet import Fernet
@@ -13,16 +10,15 @@ from cryptography.fernet import Fernet
 from windtalker.cipher import BaseCipher
 from windtalker.exc import PasswordError
 from windtalker import fingerprint
-from windtalker import files
 from windtalker import py23
-
 
 if py23.is_py2:
     input = raw_input
 
 
-class SymmtricCipher(Fernet, BaseCipher):
-    """A symmtric encryption algorithm utility class helps you easily
+class SymmetricCipher(Fernet, BaseCipher):
+    """
+    A symmetric encryption algorithm utility class helps you easily
     encrypt/decrypt text, files and even a directory.
 
     :param password: The secret password you use to encrypt all your message.
@@ -44,22 +40,29 @@ class SymmtricCipher(Fernet, BaseCipher):
     def __init__(self, password=None):
         if password:
             fernet_key = self.any_text_to_fernet_key(password)
-            super(SymmtricCipher, self).__init__(fernet_key)
-        else:
+            super(SymmetricCipher, self).__init__(fernet_key)
+        else:  # pragma: no cover
             self.input_password()
 
     def any_text_to_fernet_key(self, text):
-        """Convert any text to a fernet key for encryption.
+        """
+        Convert any text to a fernet key for encryption.
         """
         md5 = fingerprint.fingerprint.of_text(text)
         fernet_key = base64.b64encode(md5.encode("utf-8"))
         return fernet_key
 
-    def input_password(self):
-        self.set_password(input(
-            "Please enter your secret key (case sensitive): "))
+    def input_password(self):  # pragma: no cover
+        """
+        Manually enter a password for encryption on keyboard.
+        """
+        password = input("Please enter your secret key (case sensitive): ")
+        self.set_password(password)
 
     def set_password(self, password):
+        """
+        Set a new password for encryption.
+        """
         self.__init__(password)
 
     def set_encrypt_chunk_size(self, size):
@@ -71,18 +74,22 @@ class SymmtricCipher(Fernet, BaseCipher):
 
     @property
     def metadata(self):
-        return {"_encrypt_chunk_size": self._encrypt_chunk_size,
-                "_decrypt_chunk_size": self._decrypt_chunk_size, }
+        return {
+            "_encrypt_chunk_size": self._encrypt_chunk_size,
+            "_decrypt_chunk_size": self._decrypt_chunk_size,
+        }
 
     def encrypt(self, binary):
-        """Encrypt binary data.
         """
-        return super(SymmtricCipher, self).encrypt(binary)
+        Encrypt binary data.
+        """
+        return super(SymmetricCipher, self).encrypt(binary)
 
     def decrypt(self, binary):
-        """Decrypt binary data.
+        """
+        Decrypt binary data.
         """
         try:
-            return super(SymmtricCipher, self).decrypt(binary)
+            return super(SymmetricCipher, self).decrypt(binary)
         except:
             raise PasswordError("Opps, wrong magic word!")

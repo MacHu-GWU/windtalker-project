@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+import os
 from pathlib_mate import Path
 
 
@@ -8,27 +10,27 @@ default_surfix = "-encrypted"  # windtalker secret
 
 
 def get_encrpyted_path(original_path, surfix=default_surfix):
-    r"""
+    """
     Find the output encrypted file /dir path (by adding a surfix).
 
     Example:
 
-    - ``C:\test.txt`` -> ``C:\test-encrypted.txt``
-    - ``C:\Users\admin\Documents`` -> ``C:\Users\admin\Documents-encrypted``
+    - file: ``${home}/test.txt`` -> ``${home}/test-encrypted.txt``
+    - dir: ``${home}/Documents`` -> ``${home}/Documents-encrypted``
     """
     p = Path(original_path).absolute()
     encrypted_p = p.change(new_fname=p.fname + surfix)
     return encrypted_p.abspath
 
 
-def recover_path(encrypted_path, surfix=default_surfix):
-    r"""
+def get_decrpyted_path(encrypted_path, surfix=default_surfix):
+    """
     Find the original path of encrypted file or dir.
 
     Example:
 
-    - ``C:\test-encrypted.txt`` -> ``C:\test.txt``
-    - ``C:\Users\admin\Documents-encrypted`` -> ``C:\Users\admin\Documents``
+    - file: ``${home}/test-encrypted.txt`` -> ``${home}/test.txt``
+    - dir: ``${home}/Documents-encrypted`` -> ``${home}/Documents``
     """
     surfix_reversed = surfix[::-1]
 
@@ -75,3 +77,20 @@ def transform(src, dst, converter,
                         break
             else:  # pragma: no cover
                 f_output.write(converter(f_input.read(), **kwargs))
+
+
+def process_dst_overwrite_args(src,
+                               dst=None,
+                               overwrite=True,
+                               src_to_dst_func=None):
+    src = os.path.abspath(src)
+
+    if dst is None:
+        dst = src_to_dst_func(src)
+
+    if not overwrite:
+        if os.path.exists(dst):
+            raise EnvironmentError(
+                "output path '%s' already exists.." % dst)
+
+    return src, dst

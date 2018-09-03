@@ -3,7 +3,6 @@
 
 from __future__ import print_function, unicode_literals
 
-import io
 import os
 import time
 import base64
@@ -24,17 +23,20 @@ class BaseCipher(object):
     _decrypt_chunk_size = 1024
 
     def b64encode_str(self, text):
-        """base64 encode a text, return string also.
+        """
+        base64 encode a text, return string also.
         """
         return base64.b64encode(text.encode("utf-8")).decode("utf-8")
 
     def b64decode_str(self, text):
-        """base64 decode a text, return string also.
+        """
+        base64 decode a text, return string also.
         """
         return base64.b64decode(text.encode("utf-8")).decode("utf-8")
 
     def encrypt(self, binary, *args, **kwargs):
-        """Overwrite this method using your encrypt algorithm.
+        """
+        Overwrite this method using your encrypt algorithm.
 
         :param binary: binary data you need to encrypt
         :return: encrypted_binary, encrypted binary data
@@ -42,7 +44,8 @@ class BaseCipher(object):
         raise NotImplementedError
 
     def decrypt(self, binary, *args, **kwargs):
-        """Overwrite this method using your decrypt algorithm.
+        """
+        Overwrite this method using your decrypt algorithm.
 
         :param binary: binary data you need to decrypt
         :return: decrypted_binary, decrypted binary data
@@ -81,17 +84,21 @@ class BaseCipher(object):
         token = base64.b64decode(b)
         return self.decrypt(token, *args, **kwargs).decode("utf-8")
 
-    def _show(self, message, indent=0, enable_verbose=True):
+    def _show(self, message, indent=0, enable_verbose=True):  # pragma: no cover
         """Message printer.
         """
         if enable_verbose:
             print("    " * indent + message)
 
-    def encrypt_file(self, path, output_path=None,
+    def encrypt_file(self,
+                     path,
+                     output_path=None,
                      overwrite=False,
                      stream=True,
-                     enable_verbose=True):
-        """Encrypt a file. If output_path are not given, then try to use the
+                     enable_verbose=True,
+                     **kwargs):
+        """
+        Encrypt a file. If output_path are not given, then try to use the
         path with a surfix appended. The default automatical file path handling
         is defined here :meth:`windtalker.files.get_encrypted_file_path`
 
@@ -102,15 +109,10 @@ class BaseCipher(object):
           too much memory
         :param enable_verbose: boolean, trigger on/off the help information
         """
-        path = os.path.abspath(path)
-
-        if not output_path:
-            output_path = files.get_encrpyted_path(path)
-
-        if not overwrite:  # pragma: no cover
-            if os.path.exists(output_path):
-                raise EnvironmentError(
-                    "output path '%s' already exists.." % output_path)
+        path, output_path = files.process_dst_overwrite_args(
+            src=path, dst=output_path, overwrite=overwrite,
+            src_to_dst_func=files.get_encrpyted_path,
+        )
 
         self._show("Encrypt '%s' ..." % path, enable_verbose=enable_verbose)
         st = time.clock()
@@ -122,11 +124,15 @@ class BaseCipher(object):
 
         return output_path
 
-    def decrypt_file(self, path, output_path=None,
+    def decrypt_file(self,
+                     path,
+                     output_path=None,
                      overwrite=False,
                      stream=True,
-                     enable_verbose=True):
-        """Decrypt a file. If output_path are not given, then try to use the
+                     enable_verbose=True,
+                     **kwargs):
+        """
+        Decrypt a file. If output_path are not given, then try to use the
         path with a surfix appended. The default automatical file path handling
         is defined here :meth:`windtalker.files.recover_path`
 
@@ -137,15 +143,10 @@ class BaseCipher(object):
           too much memory
         :param enable_verbose: boolean, trigger on/off the help information
         """
-        path = os.path.abspath(path)
-
-        if not output_path:
-            output_path = files.recover_path(path)
-
-        if not overwrite:  # pragma: no cover
-            if os.path.exists(output_path):
-                raise EnvironmentError(
-                    "output path '%s' already exists.." % output_path)
+        path, output_path = files.process_dst_overwrite_args(
+            src=path, dst=output_path, overwrite=overwrite,
+            src_to_dst_func=files.get_decrpyted_path,
+        )
 
         self._show("Decrypt '%s' ..." % path, enable_verbose=enable_verbose)
         st = time.clock()
@@ -157,11 +158,14 @@ class BaseCipher(object):
 
         return output_path
 
-    def encrypt_dir(self, path, output_path=None,
+    def encrypt_dir(self,
+                    path,
+                    output_path=None,
                     overwrite=False,
                     stream=True,
                     enable_verbose=True):
-        """Encrypt everything in a directory.
+        """
+        Encrypt everything in a directory.
 
         :param path: path of the dir you need to encrypt
         :param output_path: encrypted dir output path
@@ -170,22 +174,17 @@ class BaseCipher(object):
           too much memory
         :param enable_verbose: boolean, trigger on/off the help information
         """
-        path = os.path.abspath(path)
-
-        if not output_path:
-            output_path = files.get_encrpyted_path(path)
-
-        if not overwrite:  # pragma: no cover
-            if os.path.exists(output_path):
-                raise EnvironmentError(
-                    "output path '%s' already exists.." % output_path)
+        path, output_path = files.process_dst_overwrite_args(
+            src=path, dst=output_path, overwrite=overwrite,
+            src_to_dst_func=files.get_encrpyted_path,
+        )
 
         self._show("--- Encrypt directory '%s' ---" % path,
                    enable_verbose=enable_verbose)
         st = time.clock()
         for current_dir, _, file_list in os.walk(path):
             new_dir = current_dir.replace(path, output_path)
-            if not os.path.exists(new_dir):
+            if not os.path.exists(new_dir):  # pragma: no cover
                 os.mkdir(new_dir)
             for basename in file_list:
                 old_path = os.path.join(current_dir, basename)
@@ -198,11 +197,14 @@ class BaseCipher(object):
                    enable_verbose=enable_verbose)
         return output_path
 
-    def decrypt_dir(self, path, output_path=None,
+    def decrypt_dir(self,
+                    path,
+                    output_path=None,
                     overwrite=False,
                     stream=True,
                     enable_verbose=True):
-        """Decrypt everything in a directory.
+        """
+        Decrypt everything in a directory.
 
         :param path: path of the dir you need to decrypt
         :param output_path: decrypted dir output path
@@ -211,22 +213,17 @@ class BaseCipher(object):
           too much memory
         :param enable_verbose: boolean, trigger on/off the help information
         """
-        path = os.path.abspath(path)
-
-        if not output_path:
-            output_path = files.recover_path(path)
-
-        if not overwrite:  # pragma: no cover
-            if os.path.exists(output_path):
-                raise EnvironmentError(
-                    "output path '%s' already exists.." % output_path)
+        path, output_path = files.process_dst_overwrite_args(
+            src=path, dst=output_path, overwrite=overwrite,
+            src_to_dst_func=files.get_decrpyted_path,
+        )
 
         self._show("--- Decrypt directory '%s' ---" % path,
                    enable_verbose=enable_verbose)
         st = time.clock()
         for current_dir, _, file_list in os.walk(path):
             new_dir = current_dir.replace(path, output_path)
-            if not os.path.exists(new_dir):
+            if not os.path.exists(new_dir):  # pragma: no cover
                 os.mkdir(new_dir)
             for basename in file_list:
                 old_path = os.path.join(current_dir, basename)

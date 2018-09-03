@@ -23,7 +23,8 @@ from windtalker import py23
 
 
 class AsymmetricCipher(BaseCipher):
-    """A asymmtric encryption algorithm utility class helps you easily
+    """
+    A asymmetric encryption algorithm utility class helps you easily
     encrypt/decrypt text and files.
 
     :param my_pubkey: your public key
@@ -45,13 +46,15 @@ class AsymmetricCipher(BaseCipher):
 
     @staticmethod
     def newkeys(nbits=1024):
-        """Create a new pair of public and private key pair to use.
+        """
+        Create a new pair of public and private key pair to use.
         """
         pubkey, privkey = rsa.newkeys(nbits, poolsize=1)
         return pubkey, privkey
 
     def encrypt(self, binary, use_sign=True):
-        """Encrypt binary data.
+        """
+        Encrypt binary data.
 
         **中文文档**
 
@@ -64,7 +67,8 @@ class AsymmetricCipher(BaseCipher):
         return token
 
     def decrypt(self, token, signature=None):
-        """Decrypt binary data.
+        """
+        Decrypt binary data.
 
         **中文文档**
 
@@ -76,41 +80,37 @@ class AsymmetricCipher(BaseCipher):
             rsa.verify(binary, signature, self.his_pubkey)
         return binary
 
-    def encrypt_file(self, path, output_path=None,
+    def encrypt_file(self,
+                     path,
+                     output_path=None,
                      overwrite=False,
                      enable_verbose=True):
-        """Encrypt a file using rsa.
-
-        RSA for big file encryption is very slow. For big file, use
-        symmetric encryption and use RSA to encrypt the password please.
         """
-        path = os.path.abspath(path)
+        Encrypt a file using rsa.
 
-        if not output_path:
-            output_path = files.get_encrypted_file_path(path)
-
-        if not overwrite:
-            if os.path.exists(output_path):
-                raise FileExistsError(
-                    "output path '%s' already exists.." % output_path)
+        RSA for big file encryption is very slow. For big file, I recommend
+        to use symmetric encryption and use RSA to encrypt the password.
+        """
+        path, output_path = files.process_dst_overwrite_args(
+            src=path, dst=output_path, overwrite=overwrite,
+            src_to_dst_func=files.get_encrpyted_path,
+        )
 
         with open(path, "rb") as infile, open(output_path, "wb") as outfile:
             encrypt_bigfile(infile, outfile, self.his_pubkey)
 
-    def decrypt_file(self, path, output_path=None,
+    def decrypt_file(self,
+                     path,
+                     output_path=None,
                      overwrite=False,
                      enable_verbose=True):
-        """Decrypt a file using rsa.
         """
-        path = os.path.abspath(path)
-
-        if not output_path:
-            output_path = files.recover_path(path)
-
-        if not overwrite:
-            if os.path.exists(output_path):
-                raise FileExistsError(
-                    "output path '%s' already exists.." % output_path)
+        Decrypt a file using rsa.
+        """
+        path, output_path = files.process_dst_overwrite_args(
+            src=path, dst=output_path, overwrite=overwrite,
+            src_to_dst_func=files.get_decrpyted_path,
+        )
 
         with open(path, "rb") as infile, open(output_path, "wb") as outfile:
             decrypt_bigfile(infile, outfile, self.my_privkey)

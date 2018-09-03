@@ -40,7 +40,7 @@ class TestAsymmetricCipher(object):
             pass
 
         # A want send B a file
-        A_pubkey, A_privkey = None, None
+        A_pubkey, A_privkey = AsymmetricCipher.newkeys()
         B_pubkey, B_privkey = AsymmetricCipher.newkeys()
 
         # A use B_pubkey for encryption

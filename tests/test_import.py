@@ -7,7 +7,9 @@ from pytest import raises, approx
 
 def test():
     import windtalker
-    pass
+    windtalker.BaseCipher
+    windtalker.SymmetricCipher
+    windtalker.AsymmetricCipher
 
 
 if __name__ == "__main__":
