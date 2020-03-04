@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from ._version import __version__
 
-__version__ = "0.0.6"
 __short_description__ = "Super easy-to-use encryption and decryption tool"
 __license__ = "MIT"
 __author__ = "Sanhe Hu"
@@ -11,10 +11,17 @@ __maintainer__ = "Sanhe Hu"
 __maintainer_email__ = "husanhe@gmail.com"
 __github_username__ = "MacHu-GWU"
 
+try:
+    from .cipher import BaseCipher
+except ImportError:
+    pass
+
+try:
+    from .symmetric import SymmetricCipher
+except ImportError:
+    pass
 
 try:
     from .asymmetric import AsymmetricCipher
-    from .symmetric import SymmetricCipher
-    from .cipher import BaseCipher
 except ImportError:  # pragma: no cover
     pass

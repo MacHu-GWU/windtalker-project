@@ -4,18 +4,18 @@ You can design your own encryption algorithm (**Even though I don't recommend to
 
 .. code-block:: python
 
-	class YourCipher(BaseCipher):
-	    def __init__(self, *args, *kwargs):
-	        """Your setup method, like prepare a secret key.
-	        """
+    class YourCipher(BaseCipher):
+        def __init__(self, *args, *kwargs):
+            """Your setup method, like prepare a secret key.
+            """
 
-	    def encrypt(self, binary, *args, **kwargs):
-	        """This method will encrypt a binary data to encrypted.
-	        """
+        def encrypt(self, binary, *args, **kwargs):
+            """This method will encrypt a binary data to encrypted.
+            """
 
-	    def decrypt(self, binary, *args, **kwargs):
-	        """This method will decrypt a binary data to original.
-	        """
+        def decrypt(self, binary, *args, **kwargs):
+            """This method will decrypt a binary data to original.
+            """
 
 After that:
 

@@ -3,11 +3,16 @@
 
 from __future__ import print_function, unicode_literals
 
+import base64
 import os
 import time
-import base64
 
-from windtalker import files
+from . import files
+
+try:
+    import typing
+except:
+    pass
 
 
 class BaseCipher(object):
@@ -25,12 +30,20 @@ class BaseCipher(object):
     def b64encode_str(self, text):
         """
         base64 encode a text, return string also.
+
+        :type text: str
+
+        :rtype: str
         """
         return base64.b64encode(text.encode("utf-8")).decode("utf-8")
 
     def b64decode_str(self, text):
         """
         base64 decode a text, return string also.
+
+        :type text: str
+
+        :rtype: str
         """
         return base64.b64decode(text.encode("utf-8")).decode("utf-8")
 
@@ -38,7 +51,10 @@ class BaseCipher(object):
         """
         Overwrite this method using your encrypt algorithm.
 
+        :type binary: bytes
         :param binary: binary data you need to encrypt
+
+        :rtype: bytes
         :return: encrypted_binary, encrypted binary data
         """
         raise NotImplementedError
@@ -47,20 +63,25 @@ class BaseCipher(object):
         """
         Overwrite this method using your decrypt algorithm.
 
+        :type binary: bytes
         :param binary: binary data you need to decrypt
+
+        :rtype: bytes
         :return: decrypted_binary, decrypted binary data
         """
         raise NotImplementedError
 
     def encrypt_binary(self, binary, *args, **kwargs):
         """
-        input: bytes, output: bytes
+        :type binary: bytes
+        :rtype: bytes
         """
         return self.encrypt(binary, *args, **kwargs)
 
     def decrypt_binary(self, binary, *args, **kwargs):
         """
-        input: bytes, output: bytes
+        :type binary: bytes
+        :rtype: bytes
         """
         return self.decrypt(binary, *args, **kwargs)
 
@@ -68,7 +89,8 @@ class BaseCipher(object):
         """
         Encrypt a string.
 
-        input: unicode str, output: unicode str
+        :type text: str
+        :rtype: str
         """
         b = text.encode("utf-8")
         token = self.encrypt(b, *args, **kwargs)
@@ -78,7 +100,8 @@ class BaseCipher(object):
         """
         Decrypt a string.
 
-        input: unicode str, output: unicode str
+        :type text: str
+        :rtype: str
         """
         b = text.encode("utf-8")
         token = base64.b64decode(b)
@@ -102,12 +125,21 @@ class BaseCipher(object):
         path with a surfix appended. The default automatical file path handling
         is defined here :meth:`windtalker.files.get_encrypted_file_path`
 
+        :type path: str
         :param path: path of the file you need to encrypt
+
+        :type output_path: str
         :param output_path: encrypted file output path
+
+        :type overwrite: bool
         :param overwrite: if True, then silently overwrite output file if exists
+
+        :type stream: bool
         :param stream: if it is a very big file, stream mode can avoid using
           too much memory
-        :param enable_verbose: boolean, trigger on/off the help information
+
+        :type enable_verbose: bool
+        :param enable_verbose: trigger on/off the help information
         """
         path, output_path = files.process_dst_overwrite_args(
             src=path, dst=output_path, overwrite=overwrite,
@@ -136,11 +168,20 @@ class BaseCipher(object):
         path with a surfix appended. The default automatical file path handling
         is defined here :meth:`windtalker.files.recover_path`
 
+        :type path: str
         :param path: path of the file you need to decrypt
+
+        :type output_path: str
         :param output_path: decrypted file output path
+
+        :type overwrite: bool
         :param overwrite: if True, then silently overwrite output file if exists
+
+        :type stream: bool
         :param stream: if it is a very big file, stream mode can avoid using
           too much memory
+
+        :type enable_verbose: bool
         :param enable_verbose: boolean, trigger on/off the help information
         """
         path, output_path = files.process_dst_overwrite_args(
@@ -167,11 +208,20 @@ class BaseCipher(object):
         """
         Encrypt everything in a directory.
 
+        :type path: str
         :param path: path of the dir you need to encrypt
+
+        :type output_path: str
         :param output_path: encrypted dir output path
+
+        :type overwrite: bool
         :param overwrite: if True, then silently overwrite output file if exists
+
+        :type stream: bool
         :param stream: if it is a very big file, stream mode can avoid using
           too much memory
+
+        :type enable_verbose: bool
         :param enable_verbose: boolean, trigger on/off the help information
         """
         path, output_path = files.process_dst_overwrite_args(
@@ -206,11 +256,20 @@ class BaseCipher(object):
         """
         Decrypt everything in a directory.
 
+        :type path: str
         :param path: path of the dir you need to decrypt
+
+        :type output_path: str
         :param output_path: decrypted dir output path
+
+        :type overwrite: bool
         :param overwrite: if True, then silently overwrite output file if exists
+
+        :type stream: bool
         :param stream: if it is a very big file, stream mode can avoid using
           too much memory
+
+        :type enable_verbose: bool
         :param enable_verbose: boolean, trigger on/off the help information
         """
         path, output_path = files.process_dst_overwrite_args(

@@ -5,7 +5,7 @@ import pytest
 
 from windtalker.symmetric import SymmetricCipher
 from windtalker.exc import PasswordError
-from base import BaseTestCipher
+from windtalker.tests import BaseTestCipher
 
 
 class TestSymmetricCipher(BaseTestCipher):
@@ -13,7 +13,7 @@ class TestSymmetricCipher(BaseTestCipher):
     cipher.set_encrypt_chunk_size(0)
     cipher.set_encrypt_chunk_size(10 * 1024 * 1024)
 
-    cipher.metadata
+    _ = cipher.metadata
 
     def test_decrypt_with_password(self):
         encrypted_text = self.cipher.encrypt_text("Hello World")

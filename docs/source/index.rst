@@ -1,21 +1,16 @@
 .. contents::
 
-.. include:: ../../README.rst
+Release v\ |release| (:ref:`What's new? <release_history>`).
 
-.. _quick_guide:
+.. include:: ../../README.rst
 
 Table of Content
 ------------------------------------------------------------------------------
 
-.. toctree::
-   :maxdepth: 1
+.. autotoctree::
 
-    Using symmetric encryption <01-Using-Symmetric-Entryption/index.rst>
-    Using asymmetric encryption <02-Using-Asymmetric-Encryption/index.rst>
-    Create a new cipher using your own algorithm <03-Extend/index.rst>
-     10 Minutes to Get Start
+.. include:: ../../AUTHORS.rst
 
-.. include:: author.rst
 
 API Document
 ------------------------------------------------------------------------------

@@ -4,12 +4,14 @@
 from __future__ import print_function, unicode_literals
 
 import base64
-from pathlib_mate import Path
+
 from cryptography.fernet import Fernet
-from windtalker.cipher import BaseCipher
-from windtalker.exc import PasswordError
-from windtalker import fingerprint
-from windtalker import py23
+from pathlib_mate import Path
+
+from . import fingerprint
+from . import py23
+from .cipher import BaseCipher
+from .exc import PasswordError
 
 if py23.is_py2:
     input = raw_input
@@ -22,7 +24,7 @@ def read_windtalker_password():  # pragma: no cover
     return WINDTALKER_CONFIG_FILE.read_text(encoding="utf-8").strip()
 
 
-class SymmetricCipher(Fernet, BaseCipher):
+class SymmetricCipher(BaseCipher):
     """
     A symmetric encryption algorithm utility class helps you easily
     encrypt/decrypt text, files and even a directory.
@@ -46,7 +48,7 @@ class SymmetricCipher(Fernet, BaseCipher):
     def __init__(self, password=None):
         if password:
             fernet_key = self.any_text_to_fernet_key(password)
-            super(SymmetricCipher, self).__init__(fernet_key)
+            self.fernet = Fernet(fernet_key)  # type: Fernet
         else:  # pragma: no cover
             if WINDTALKER_CONFIG_FILE.exists():
                 self.set_password(read_windtalker_password())
@@ -56,6 +58,9 @@ class SymmetricCipher(Fernet, BaseCipher):
     def any_text_to_fernet_key(self, text):
         """
         Convert any text to a fernet key for encryption.
+
+        :type text: str
+        :rtype: bytes
         """
         md5 = fingerprint.fingerprint.of_text(text)
         fernet_key = base64.b64encode(md5.encode("utf-8"))
@@ -72,7 +77,7 @@ class SymmetricCipher(Fernet, BaseCipher):
         """
         Set a new password for encryption.
         """
-        self.__init__(password)
+        self.__init__(password=password)
 
     def set_encrypt_chunk_size(self, size):
         if 1024 * 1024 < size < 100 * 1024 * 1024:
@@ -88,17 +93,23 @@ class SymmetricCipher(Fernet, BaseCipher):
             "_decrypt_chunk_size": self._decrypt_chunk_size,
         }
 
-    def encrypt(self, binary):
+    def encrypt(self, binary, *args, **kwargs):
         """
         Encrypt binary data.
-        """
-        return super(SymmetricCipher, self).encrypt(binary)
 
-    def decrypt(self, binary):
+        :type binary: bytes
+        :rtype: bytes
+        """
+        return self.fernet.encrypt(binary)
+
+    def decrypt(self, binary, *args, **kwargs):
         """
         Decrypt binary data.
+
+        :type binary: bytes
+        :rtype: bytes
         """
         try:
-            return super(SymmetricCipher, self).decrypt(binary)
+            return self.fernet.decrypt(binary)
         except:
             raise PasswordError("Opps, wrong magic word!")

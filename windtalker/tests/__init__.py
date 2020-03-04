@@ -1,7 +1,14 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from pathlib_mate import Path
+
+ORIGINAL_FILE = Path(__file__).change(new_basename="my-secret-file.txt").abspath
+ENCRYPTED_FILE = Path(__file__).change(new_basename="my-secret-file-encrypted.txt").abspath
+DECRYPTED_FILE = Path(__file__).change(new_basename="my-secret-file-decrypted.txt").abspath
+
+ORIGINAL_DIR = Path(__file__).change(new_basename="MySecretFolder").abspath
+ENCRYPTED_DIR = Path(__file__).change(new_basename="MySecretFolder-encrypted").abspath
+DECRYPTED_DIR = Path(__file__).change(new_basename="MySecretFolder-decrypted").abspath
 
 
 class BaseTestCipher(object):
@@ -19,30 +26,18 @@ class BaseTestCipher(object):
         assert self.c.decrypt_binary(self.c.encrypt_binary(b)) == b
 
     def test_encrypt_and_decrypt_file(self):
-        original = Path(__file__).change(new_basename="my-secret-file.txt").abspath
-        encrypted = Path(__file__).change(
-            new_basename="my-secret-file-encrypted.txt").abspath
-        decrypted = Path(__file__).change(
-            new_basename="my-secret-file-decrypted.txt").abspath
+        original_text = Path(ORIGINAL_FILE).read_text()
 
-        original_text = Path(original).read_text()
-
-        self.c.encrypt_file(original, encrypted,
+        self.c.encrypt_file(ORIGINAL_FILE, ENCRYPTED_FILE,
                             overwrite=True, enable_verbose=False)
-        encrypted_text = Path(encrypted).read_text()
+        encrypted_text = Path(ENCRYPTED_FILE).read_text()
 
-        self.c.decrypt_file(encrypted, decrypted,
+        self.c.decrypt_file(ENCRYPTED_FILE, DECRYPTED_FILE,
                             overwrite=True, enable_verbose=False)
-        decrypted_text = Path(decrypted).read_text()
+        decrypted_text = Path(DECRYPTED_FILE).read_text()
 
         assert original_text == decrypted_text
         assert original_text != encrypted_text
-
-        for path in [encrypted, decrypted]:
-            try:
-                Path(path).remove()
-            except:
-                pass
 
     def test_encrypt_and_decrypt_dir(self):
         dir_path = Path(__file__).change(
@@ -61,7 +56,7 @@ class BaseTestCipher(object):
             overwrite=True, enable_verbose=False
         )
         for p1, p2 in zip(
-                Path(dir_path).select_file(recursive=True),
-                Path(dir_path_decrypted).select_file(recursive=True),
+                Path(ORIGINAL_DIR).select_file(recursive=True),
+                Path(DECRYPTED_DIR).select_file(recursive=True),
         ):
             assert p1.read_bytes() == p2.read_bytes()

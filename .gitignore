@@ -2,8 +2,11 @@
 windtalker_venv/
 windtalker.egg-info/
 windtalker-*/
-MySecretFolder-encrypted
-MySecretFolder-decrypted
+
+windtalker/tests/my-secret-file.txt-encrypted.txt
+windtalker/tests/my-secret-file.txt-decrypted.txt
+windtalker/tests/MySecretFolder-encrypted
+windtalker/tests/MySecretFolder-decrypted
 
 
 # Byte-compiled / optimized / DLL files
@@ -33,7 +36,7 @@ var/
 *.egg
 
 # PyCharm
-.idea
+.idea/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -51,11 +54,11 @@ htmlcov/
 .coverage
 .coverage.*
 .cache
+.pytest_cache/
 nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/
-.pytest_cache
 
 # Translations
 *.mo
@@ -72,7 +75,7 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
+docs/build/
 
 # PyBuilder
 target/
@@ -92,6 +95,8 @@ celerybeat-schedule
 # virtualenv
 venv/
 ENV/
+
+
 
 # Spyder project settings
 .spyderproject

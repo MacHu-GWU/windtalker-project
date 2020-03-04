@@ -1,8 +1,8 @@
 # Coverage.py is a tool for measuring code coverage of Python programs.
-# for more info: https://coverage.readthedocs.io/en/coverage-4.4.1/config.html
+# for more info: https://coverage.readthedocs.io/en/latest/config.html
 [run]
 omit =
-    windtalker/pkg/*
+    windtalker/_version.py
     windtalker/fingerprint.py
     windtalker/py23.py
 

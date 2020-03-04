@@ -1,8 +1,9 @@
+
 .. image:: https://travis-ci.org/MacHu-GWU/windtalker-project.svg?branch=master
     :target: https://travis-ci.org/MacHu-GWU/windtalker-project?branch=master
 
 .. image:: https://codecov.io/gh/MacHu-GWU/windtalker-project/branch/master/graph/badge.svg
-  :target: https://codecov.io/gh/MacHu-GWU/windtalker-project
+    :target: https://codecov.io/gh/MacHu-GWU/windtalker-project
 
 .. image:: https://img.shields.io/pypi/v/windtalker.svg
     :target: https://pypi.python.org/pypi/windtalker
@@ -13,8 +14,35 @@
 .. image:: https://img.shields.io/pypi/pyversions/windtalker.svg
     :target: https://pypi.python.org/pypi/windtalker
 
-.. image:: https://img.shields.io/badge/Star_Me_on_GitHub!--None.svg?style=social
+.. image:: https://img.shields.io/badge/STAR_Me_on_GitHub!--None.svg?style=social
     :target: https://github.com/MacHu-GWU/windtalker-project
+
+------
+
+
+.. image:: https://img.shields.io/badge/Link-Document-blue.svg
+    :target: http://{{ cookiecutter.package_name }}.my-docs.com/index.html
+
+.. image:: https://img.shields.io/badge/Link-API-blue.svg
+    :target: http://{{ cookiecutter.package_name }}.my-docs.com/py-modindex.html
+
+.. image:: https://img.shields.io/badge/Link-Source_Code-blue.svg
+    :target: http://{{ cookiecutter.package_name }}.my-docs.com/py-modindex.html
+
+.. image:: https://img.shields.io/badge/Link-Install-blue.svg
+    :target: `install`_
+
+.. image:: https://img.shields.io/badge/Link-GitHub-blue.svg
+    :target: https://github.com/MacHu-GWU/windtalker-project
+
+.. image:: https://img.shields.io/badge/Link-Submit_Issue-blue.svg
+    :target: https://github.com/MacHu-GWU/windtalker-project/issues
+
+.. image:: https://img.shields.io/badge/Link-Request_Feature-blue.svg
+    :target: https://github.com/MacHu-GWU/windtalker-project/issues
+
+.. image:: https://img.shields.io/badge/Link-Download-blue.svg
+    :target: https://pypi.org/pypi/windtalker#files
 
 
 Welcome to ``windtalker`` Documentation
@@ -50,28 +78,6 @@ ${HOME} directory:
 - Linux: /home/<username>
 
 For more features and how to use RSA to encrypt your file or directory, please read `THIS <https://windtalker.readthedocs.io/index.html#table-of-content>`_
-
-
-Quick Links
-------------------------------------------------------------------------------
-
-- .. image:: https://img.shields.io/badge/Link-Document-red.svg
-      :target: https://windtalker.readthedocs.io/index.html
-
-- .. image:: https://img.shields.io/badge/Link-API_Reference_and_Source_Code-red.svg
-      :target: https://windtalker.readthedocs.io/py-modindex.html
-
-- .. image:: https://img.shields.io/badge/Link-Install-red.svg
-      :target: `install`_
-
-- .. image:: https://img.shields.io/badge/Link-GitHub-blue.svg
-      :target: https://github.com/MacHu-GWU/windtalker-project
-
-- .. image:: https://img.shields.io/badge/Link-Submit_Issue_and_Feature_Request-blue.svg
-      :target: https://github.com/MacHu-GWU/windtalker-project/issues
-
-- .. image:: https://img.shields.io/badge/Link-Download-blue.svg
-      :target: https://pypi.python.org/pypi/windtalker#downloads
 
 
 .. _install:
