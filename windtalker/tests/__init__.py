@@ -40,19 +40,12 @@ class BaseTestCipher(object):
         assert original_text != encrypted_text
 
     def test_encrypt_and_decrypt_dir(self):
-        dir_path = Path(__file__).change(
-            new_basename="MySecretFolder").abspath
-        dir_path_encrypted = Path(__file__).change(
-            new_basename="MySecretFolder-encrypted").abspath
-        dir_path_decrypted = Path(__file__).change(
-            new_basename="MySecretFolder-decrypted").abspath
-
         self.c.encrypt_dir(
-            dir_path, dir_path_encrypted,
+            ORIGINAL_DIR, ENCRYPTED_DIR,
             overwrite=True, enable_verbose=False
         )
         self.c.decrypt_dir(
-            dir_path_encrypted, dir_path_decrypted,
+            ENCRYPTED_DIR, DECRYPTED_DIR,
             overwrite=True, enable_verbose=False
         )
         for p1, p2 in zip(

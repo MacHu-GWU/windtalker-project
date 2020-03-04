@@ -9,17 +9,14 @@
 
 from __future__ import print_function, unicode_literals
 
-import os
-from os.path import join
-
 import rsa
-from rsa.bigfile import *
 
-from windtalker.cipher import BaseCipher
-from windtalker.exc import PasswordError
-from windtalker import fingerprint
-from windtalker import files
-from windtalker import py23
+from .cipher import BaseCipher
+
+ERROR_MESSAGE = (
+    "Asymmetric Encryption is for safely transfer secret key only! "
+    "It is not suitable for file encryption!"
+)
 
 
 class AsymmetricCipher(BaseCipher):
@@ -33,16 +30,22 @@ class AsymmetricCipher(BaseCipher):
 
     **中文文档**
 
-    非对称加密器。
+    非对称加密器. 主要用于加密少量信息. 通常用于安全地交换秘钥, 然后用该秘钥作为对称加密
+    的钥匙对大量数据进行加密.
     """
     # key length/max length msg, 512/53, 1024/117, 2045/245
     _encrypt_chunk_size = 53
     _decrypt_chunk_size = 53
 
-    def __init__(self, my_pubkey, my_privkey, his_pubkey):
+    def __init__(self,
+                 my_pubkey,
+                 my_privkey,
+                 his_pubkey):
         self.my_pubkey = my_pubkey
         self.my_privkey = my_privkey
         self.his_pubkey = his_pubkey
+        self.sign = None
+        self.password = None
 
     @staticmethod
     def newkeys(nbits=1024):
@@ -52,10 +55,17 @@ class AsymmetricCipher(BaseCipher):
         pubkey, privkey = rsa.newkeys(nbits, poolsize=1)
         return pubkey, privkey
 
-    def encrypt(self, binary, use_sign=True):
+    def encrypt(self,
+                binary,
+                use_sign=True,
+                sign_method="SHA-256",
+                *args,
+                **kwargs):
         """
         Encrypt binary data.
 
+        :param sing_method: one of 'MD5', 'SHA-1', 'SHA-224', SHA-256',
+            'SHA-384' or 'SHA-512'
         **中文文档**
 
         - 发送消息时只需要对方的pubkey
@@ -63,10 +73,10 @@ class AsymmetricCipher(BaseCipher):
         """
         token = rsa.encrypt(binary, self.his_pubkey)  # encrypt it
         if use_sign:
-            self.sign = rsa.sign(binary, self.my_privkey, "SHA-1")  # sign it
+            self.sign = rsa.sign(binary, self.my_privkey, sign_method)  # sign it
         return token
 
-    def decrypt(self, token, signature=None):
+    def decrypt(self, token, signature=None, *args, **kwargs):
         """
         Decrypt binary data.
 
@@ -80,37 +90,14 @@ class AsymmetricCipher(BaseCipher):
             rsa.verify(binary, signature, self.his_pubkey)
         return binary
 
-    def encrypt_file(self,
-                     path,
-                     output_path=None,
-                     overwrite=False,
-                     enable_verbose=True):
-        """
-        Encrypt a file using rsa.
+    def encrypt_file(self, **kwargs):  # pragma: no cover
+        raise NotImplementedError(ERROR_MESSAGE)
 
-        RSA for big file encryption is very slow. For big file, I recommend
-        to use symmetric encryption and use RSA to encrypt the password.
-        """
-        path, output_path = files.process_dst_overwrite_args(
-            src=path, dst=output_path, overwrite=overwrite,
-            src_to_dst_func=files.get_encrpyted_path,
-        )
+    def decrypt_file(self, **kwargs):  # pragma: no cover
+        raise NotImplementedError(ERROR_MESSAGE)
 
-        with open(path, "rb") as infile, open(output_path, "wb") as outfile:
-            encrypt_bigfile(infile, outfile, self.his_pubkey)
+    def encrypt_dir(self, **kwargs):  # pragma: no cover
+        raise NotImplementedError(ERROR_MESSAGE)
 
-    def decrypt_file(self,
-                     path,
-                     output_path=None,
-                     overwrite=False,
-                     enable_verbose=True):
-        """
-        Decrypt a file using rsa.
-        """
-        path, output_path = files.process_dst_overwrite_args(
-            src=path, dst=output_path, overwrite=overwrite,
-            src_to_dst_func=files.get_decrpyted_path,
-        )
-
-        with open(path, "rb") as infile, open(output_path, "wb") as outfile:
-            decrypt_bigfile(infile, outfile, self.my_privkey)
+    def decrypt_dir(self, **kwargs):  # pragma: no cover
+        raise NotImplementedError(ERROR_MESSAGE)

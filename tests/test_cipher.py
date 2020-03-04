@@ -2,19 +2,21 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
+
+import base64
+
 import pytest
-from pytest import raises, approx
 
 from windtalker.cipher import BaseCipher
-from base import BaseTestCipher
+from windtalker.tests import BaseTestCipher
 
 
 class MyCipher(BaseCipher):
-    def decrypt(self, binary, *args, **kwargs):
-        return binary
-
     def encrypt(self, binary, *args, **kwargs):
-        return binary
+        return (base64.b64encode(binary).decode("utf-8") + "X").encode("utf-8")
+
+    def decrypt(self, binary, *args, **kwargs):
+        return base64.b64decode(binary.decode("utf-8")[:-1].encode("utf-8"))
 
 
 c = MyCipher()
