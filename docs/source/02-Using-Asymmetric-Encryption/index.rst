@@ -34,18 +34,4 @@ And then send ``token`` and ``sign`` to your friend **Bob**. From **Bob**'s poin
 
 Work with files and directory
 -------------------------------------------------------------------------------
-Asymmetric encryption algorithm works slow. A widely used solution is to encrypt your files with :ref:`Symmetric Encryption <symmetric>`, and then use asymmetric encryption to encrypt your secret key of symmetric encryption. If you really want to do it, ``windtalker`` provides a utility method :meth:`~windtalker.asymmetric.AsymmetricCipher.encrypt_file` for that. Let's use the old example, you want to send ``MyBankAccount.txt`` to **Bob**:
-
-.. code-block:: python
-
-	# for this time, you only need Bob's public key
-	>>> A_pubkey, A_privkey = None, None
-	>>> B_pubkey, B_privkey = AsymmetricCipher.newkeys()
-	>>> cipherA = AsymmetricCipher(A_pubkey, A_privkey, B_pubkey)
-	>>> cipherA.encrypt_file("MyBankAccount.txt",
-	    "MyBankAccount-encrypted.txt", overwrite=True)
-
-	# and Bob will use his private key for decryption
-	>>> cipherB = AsymmetricCipher(B_pubkey, B_privkey, A_pubkey)
-	>>> cipherB.decrypt_file("MyBankAccount-encrypted.txt",
-	    "MyBankAccount.txt", overwrite=True)
+Asymmetric encryption algorithm works slow. A widely used solution is to encrypt your files with :ref:`Symmetric Encryption <symmetric>`, and then use asymmetric encryption to encrypt your secret key of symmetric encryption.

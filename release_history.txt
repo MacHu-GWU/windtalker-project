@@ -22,6 +22,7 @@ Release and Version History
 **Features and Improvements**
 
 - a API stable release
+- Asymmetric Cipher is no longer allowed to encrypt big file or dir. Please use Asymmetric Cipher to transfer secret key, and use the key with Symmetric Cipher with big file.
 
 **Minor Improvements**
 
