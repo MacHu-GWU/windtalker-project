@@ -1,3 +1,5 @@
+.. _extend-windtalker:
+
 Create a new cipher using your own algorithm
 ===============================================================================
 You can design your own encryption algorithm (**Even though I don't recommend to**) for fun. With ``windtalker``, you only need to write minimal code, and then it works for any type of encryption in text, files and also directory. This is how:

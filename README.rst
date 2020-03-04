@@ -21,13 +21,13 @@
 
 
 .. image:: https://img.shields.io/badge/Link-Document-blue.svg
-    :target: http://{{ cookiecutter.package_name }}.my-docs.com/index.html
+    :target: http://windtalker.readthedocs.io/index.html
 
 .. image:: https://img.shields.io/badge/Link-API-blue.svg
-    :target: http://{{ cookiecutter.package_name }}.my-docs.com/py-modindex.html
+    :target: http://windtalker.readthedocs.io/py-modindex.html
 
 .. image:: https://img.shields.io/badge/Link-Source_Code-blue.svg
-    :target: http://{{ cookiecutter.package_name }}.my-docs.com/py-modindex.html
+    :target: http://windtalker.readthedocs.io/py-modindex.html
 
 .. image:: https://img.shields.io/badge/Link-Install-blue.svg
     :target: `install`_
