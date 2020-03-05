@@ -1,3 +1,6 @@
+.. image:: https://readthedocs.org/projects/windtalker/badge/?version=latest
+    :target: http://windtalker.readthedocs.io/index.html
+    :alt: Documentation Status
 
 .. image:: https://travis-ci.org/MacHu-GWU/windtalker-project.svg?branch=master
     :target: https://travis-ci.org/MacHu-GWU/windtalker-project?branch=master
