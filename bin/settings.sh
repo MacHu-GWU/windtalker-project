@@ -28,7 +28,7 @@ py_ver_major="3"
 py_ver_minor="6"
 py_ver_micro="2"
 use_pyenv="N" # "Y" or "N"
-supported_py_versions="3.6.2" # e.g: "2.7.13 3.6.2"
+supported_py_versions="3.6.2" # e.g: "3.6.2 3.7.9"
 
 
 #--- Doc Build

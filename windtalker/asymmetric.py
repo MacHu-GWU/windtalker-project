@@ -1,8 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
-2016年还在由活跃的社区维护的rsa扩展有 ``cryptography`` 和 ``rsa``。 cryp集合了非常
+2021年还在由活跃的社区维护的rsa扩展有 ``cryptography`` 和 ``rsa``。 cryp集合了非常
 多主流的加密算法, 并且都做了非常多的安全和性能优化(C语言实现)。而rsa是纯Python
 实现, 安装非常方便, 使用起来也较为简单。所以本模块最后决定使用rsa进行开发。
 """

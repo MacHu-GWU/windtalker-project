@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """
@@ -7,7 +6,7 @@ to find hash value for a bytes, a string, a Python object or a file.
 
 Import this module::
 
-    >>> from fingerprint import fingerprint
+    >>> from xxx import fingerprint
 
 Example::
 

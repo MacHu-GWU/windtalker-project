@@ -2,8 +2,8 @@
     :target: http://windtalker.readthedocs.io/index.html
     :alt: Documentation Status
 
-.. image:: https://travis-ci.org/MacHu-GWU/windtalker-project.svg?branch=master
-    :target: https://travis-ci.org/MacHu-GWU/windtalker-project?branch=master
+.. image:: https://github.com/MacHu-GWU/windtalker-project/workflows/CI/badge.svg
+    :target: https://github.com/MacHu-GWU/windtalker-project/actions?query=workflow:CI
 
 .. image:: https://codecov.io/gh/MacHu-GWU/windtalker-project/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/MacHu-GWU/windtalker-project

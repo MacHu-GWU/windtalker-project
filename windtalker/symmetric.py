@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function, unicode_literals
@@ -112,4 +111,4 @@ class SymmetricCipher(BaseCipher):
         try:
             return self.fernet.decrypt(binary)
         except:
-            raise PasswordError("Opps, wrong magic word!")
+            raise PasswordError("Ops, wrong magic word!")
