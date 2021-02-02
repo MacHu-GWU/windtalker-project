@@ -147,11 +147,11 @@ class BaseCipher(object):
         )
 
         self._show("Encrypt '%s' ..." % path, enable_verbose=enable_verbose)
-        st = time.clock()
+        st = time.process_time()
         files.transform(path, output_path, converter=self.encrypt,
                         overwrite=overwrite, stream=stream,
                         chunksize=self._encrypt_chunk_size)
-        self._show("    Finished! Elapse %.6f seconds" % (time.clock() - st,),
+        self._show("    Finished! Elapse %.6f seconds" % (time.process_time() - st,),
                    enable_verbose=enable_verbose)
 
         return output_path
@@ -190,11 +190,11 @@ class BaseCipher(object):
         )
 
         self._show("Decrypt '%s' ..." % path, enable_verbose=enable_verbose)
-        st = time.clock()
+        st = time.process_time()
         files.transform(path, output_path, converter=self.decrypt,
                         overwrite=overwrite, stream=stream,
                         chunksize=self._decrypt_chunk_size)
-        self._show("    Finished! Elapse %.6f seconds" % (time.clock() - st,),
+        self._show("    Finished! Elapse %.6f seconds" % (time.process_time() - st,),
                    enable_verbose=enable_verbose)
 
         return output_path
@@ -231,7 +231,7 @@ class BaseCipher(object):
 
         self._show("--- Encrypt directory '%s' ---" % path,
                    enable_verbose=enable_verbose)
-        st = time.clock()
+        st = time.process_time()
         for current_dir, _, file_list in os.walk(path):
             new_dir = current_dir.replace(path, output_path)
             if not os.path.exists(new_dir):  # pragma: no cover
@@ -243,7 +243,7 @@ class BaseCipher(object):
                                   overwrite=overwrite,
                                   stream=stream,
                                   enable_verbose=enable_verbose)
-        self._show("Complete! Elapse %.6f seconds" % (time.clock() - st,),
+        self._show("Complete! Elapse %.6f seconds" % (time.process_time() - st,),
                    enable_verbose=enable_verbose)
         return output_path
 
@@ -279,7 +279,7 @@ class BaseCipher(object):
 
         self._show("--- Decrypt directory '%s' ---" % path,
                    enable_verbose=enable_verbose)
-        st = time.clock()
+        st = time.process_time()
         for current_dir, _, file_list in os.walk(path):
             new_dir = current_dir.replace(path, output_path)
             if not os.path.exists(new_dir):  # pragma: no cover
@@ -291,7 +291,7 @@ class BaseCipher(object):
                                   overwrite=overwrite,
                                   stream=stream,
                                   enable_verbose=enable_verbose)
-        self._show("Complete! Elapse %.6f seconds" % (time.clock() - st,),
+        self._show("Complete! Elapse %.6f seconds" % (time.process_time() - st,),
                    enable_verbose=enable_verbose)
 
         return output_path
