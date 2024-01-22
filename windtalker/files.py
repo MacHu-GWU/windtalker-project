@@ -1,34 +1,35 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
+"""
+File handling utility functions.
+"""
 
-import os
+import typing as T
+from pathlib_mate import Path, T_PATH_ARG
 
-from pathlib_mate import Path
-
-DEFAULT_SURFIX = "-encrypted"  # windtalker secret file or folder surfix
+DEFAULT_SUFFIX = "-encrypted"  # windtalker secret file or folder suffix
 
 
-def get_encrpyted_path(original_path, surfix=DEFAULT_SURFIX):
+def get_encrypted_path(
+    original_path: T_PATH_ARG,
+    suffix: str = DEFAULT_SUFFIX,
+) -> Path:
     """
-    Find the output encrypted file /dir path (by adding a surfix).
+    Find the output encrypted file /dir path (by adding a suffix).
 
     Example:
 
     - file: ``${home}/test.txt`` -> ``${home}/test-encrypted.txt``
     - dir: ``${home}/Documents`` -> ``${home}/Documents-encrypted``
-
-    :type original_path: str
-    :type surfix: str
-
-    :rtype: str
     """
     p = Path(original_path).absolute()
-    encrypted_p = p.change(new_fname=p.fname + surfix)
-    return encrypted_p.abspath
+    return p.change(new_fname=p.fname + suffix)
 
 
-def get_decrpyted_path(encrypted_path, surfix=DEFAULT_SURFIX):
+def get_decrypted_path(
+    encrypted_path: T_PATH_ARG,
+    suffix: str = DEFAULT_SUFFIX,
+) -> Path:
     """
     Find the original path of encrypted file or dir.
 
@@ -36,63 +37,50 @@ def get_decrpyted_path(encrypted_path, surfix=DEFAULT_SURFIX):
 
     - file: ``${home}/test-encrypted.txt`` -> ``${home}/test.txt``
     - dir: ``${home}/Documents-encrypted`` -> ``${home}/Documents``
-
-    :type encrypted_path: str
-    :type surfix: str
-
-    :rtype: str
     """
-    surfix_reversed = surfix[::-1]
-
     p = Path(encrypted_path).absolute()
-    fname = p.fname
-    fname_reversed = fname[::-1]
-    new_fname = fname_reversed.replace(surfix_reversed, "", 1)[::-1]
-    decrypted_p = p.change(new_fname=new_fname)
-    return decrypted_p.abspath
+    if not p.fname.endswith(suffix):
+        raise ValueError(
+            f"'{p}' is not a encrypted file or dir path "
+            f"(filename not ends with suffix {suffix}."
+        )
+    return p.change(new_fname=p.fname[: -len(suffix)])
 
 
-def transform(src,
-              dst,
-              converter,
-              overwrite=False,
-              stream=True,
-              chunksize=1024 ** 2,
-              **kwargs):
+def transform(
+    src: T_PATH_ARG,
+    dst: T_PATH_ARG,
+    converter: T.Callable,
+    overwrite: bool = False,
+    stream: bool = True,
+    chunksize: int = 1024**2,
+    **kwargs,
+):
     """
     A file stream transform IO utility function.
 
-    :type src: str
     :param src: original file path
-
-    :type dst: str
     :param dst: destination file path
-
-    :type converter: typing.Callable
     :param converter: binary content converter function
-
-    :type overwrite: bool
     :param overwrite: default False,
-
-    :type stream: bool
     :param stream: default True, if True, use stream IO mode, chunksize has to
       be specified.
-
-    :type chunksize: int
     :param chunksize: default 1MB
     """
+    p_src = Path(src).absolute()
+    p_dst = Path(dst).absolute()
     if not overwrite:  # pragma: no cover
-        if Path(dst).exists():
-            raise EnvironmentError("'%s' already exists!" % dst)
+        if p_dst.exists():
+            raise EnvironmentError(f"'{p_dst}' already exists!")
 
-    with open(src, "rb") as f_input:
-        with open(dst, "wb") as f_output:
+    with p_src.open("rb") as f_input:
+        with p_dst.open("wb") as f_output:
             if stream:
                 # fix chunksize to a reasonable range
-                if chunksize > 1024 ** 2 * 10:
-                    chunksize = 1024 ** 2 * 10
-                elif chunksize < 1024 ** 2:
-                    chunksize = 1024 ** 2
+                if chunksize > 1024**2 * 10:
+                    chunksize = 1024**2 * 10
+                elif chunksize < 1024**2:
+                    chunksize = 1024**2
 
                 # write file
                 while 1:
@@ -105,21 +93,24 @@ def transform(src,
                 f_output.write(converter(f_input.read(), **kwargs))
 
 
-def process_dst_overwrite_args(src,
-                               dst=None,
-                               overwrite=True,
-                               src_to_dst_func=None):
+def process_dst_overwrite_args(
+    src: T_PATH_ARG,
+    dst: T.Optional[T_PATH_ARG] = None,
+    overwrite: bool = True,
+    src_to_dst_func: T.Optional[T.Callable] = None,
+) -> T.Tuple[Path, Path]:
     """
     Check when overwrite is not allowed, whether the destination exists.
     """
-    src = os.path.abspath(src)
+    p_src = Path(src).absolute()
 
     if dst is None:
-        dst = src_to_dst_func(src)
+        p_dst = src_to_dst_func(p_src)
+    else:
+        p_dst = Path(dst).absolute()
 
     if not overwrite:
-        if os.path.exists(dst):
-            raise EnvironmentError(
-                "output path '%s' already exists.." % dst)
+        if p_dst.exists():
+            raise EnvironmentError(f"output path '{p_dst}' already exists..")
 
-    return src, dst
+    return p_src, p_dst

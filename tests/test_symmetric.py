@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import pytest
@@ -10,7 +9,8 @@ from windtalker.tests import BaseTestCipher
 
 class TestSymmetricCipher(BaseTestCipher):
     cipher = SymmetricCipher(password="MyPassword")
-    cipher.set_encrypt_chunk_size(0)
+    with pytest.raises(ValueError):
+        cipher.set_encrypt_chunk_size(0)
     cipher.set_encrypt_chunk_size(10 * 1024 * 1024)
 
     _ = cipher.metadata
@@ -24,7 +24,6 @@ class TestSymmetricCipher(BaseTestCipher):
 
 
 if __name__ == "__main__":
-    import os
+    from windtalker.tests import run_cov_test
 
-    basename = os.path.basename(__file__)
-    pytest.main([basename, "-s", "--tb=native"])
+    run_cov_test(__file__, "windtalker.symmetric", preview=False)

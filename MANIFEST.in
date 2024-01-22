@@ -8,3 +8,5 @@ include *.txt
 include *.rst
 exclude *.pyc
 exclude *.pyo
+exclude windtalker/docs/**.*
+exclude windtalker/tests/**.*

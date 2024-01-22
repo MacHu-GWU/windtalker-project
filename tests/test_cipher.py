@@ -1,11 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from __future__ import unicode_literals
-
 import base64
-
-import pytest
 
 from windtalker.cipher import BaseCipher
 from windtalker.tests import BaseTestCipher
@@ -32,7 +27,6 @@ class TestBaseCipher(BaseTestCipher):
 
 
 if __name__ == "__main__":
-    import os
+    from windtalker.tests import run_cov_test
 
-    basename = os.path.basename(__file__)
-    pytest.main([basename, "-s", "--tb=native"])
+    run_cov_test(__file__, "windtalker.cipher", preview=False)
