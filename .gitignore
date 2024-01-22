@@ -1,13 +1,10 @@
 # User Settings
-windtalker_venv/
 windtalker.egg-info/
-windtalker-*/
-
-windtalker/tests/my-secret-file-encrypted.txt
-windtalker/tests/my-secret-file-decrypted.txt
-windtalker/tests/MySecretFolder-encrypted
-windtalker/tests/MySecretFolder-decrypted
-
+tmp/
+windtalker/tests/*encrypted*
+windtalker/tests/*decrypted*
+windtalker/tests/*encrypted
+windtalker/tests/*decrypted
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -95,8 +92,6 @@ celerybeat-schedule
 # virtualenv
 venv/
 ENV/
-
-
 
 # Spyder project settings
 .spyderproject

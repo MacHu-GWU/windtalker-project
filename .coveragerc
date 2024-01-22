@@ -2,9 +2,12 @@
 # for more info: https://coverage.readthedocs.io/en/latest/config.html
 [run]
 omit =
+    windtalker/docs/*
+    windtalker/tests/*
+    windtalker/vendor/*
     windtalker/_version.py
-    windtalker/fingerprint.py
-    windtalker/py23.py
+    windtalker/cli.py
+    windtalker/paths.py
 
 [report]
 # Regexes for lines to exclude from consideration

@@ -4,7 +4,7 @@ Release and Version History
 ==============================================================================
 
 
-1.0.1 (TODO)
+x.y.z (Backlog)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
@@ -15,20 +15,22 @@ Release and Version History
 **Miscellaneous**
 
 
-1.0.0 (2020-02-01)
+0.1.1 (2024-01-22)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Features and Improvements**
+
+**Minor Improvements**
+
+**Bugfixes**
+
+**Miscellaneous**
+
+
+0.0.8 (2021-02-01)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
 - use latest cryptography and rsa
--
-
-**Minor Improvements**
-
-**Bugfixes**
-
-**Miscellaneous**
-
-- Move CI from travis to GitHub Action
 
 
 0.0.7 (2020-03-04)
@@ -45,12 +47,6 @@ Release and Version History
 **Features and Improvements**
 
 - a API stable release
-
-**Minor Improvements**
-
-**Bugfixes**
-
-**Miscellaneous**
 
 
 0.0.5 (2017-10-13)
