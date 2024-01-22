@@ -1,6 +1,6 @@
 
 .. image:: https://readthedocs.org/projects/windtalker/badge/?version=latest
-    :target: https://windtalker.readthedocs.io/en/latest/
+    :target: https://windtalker.readthedocs.io/
     :alt: Documentation Status
 
 .. image:: https://github.com/MacHu-GWU/windtalker-project/workflows/CI/badge.svg
@@ -27,10 +27,10 @@
 ------
 
 .. image:: https://img.shields.io/badge/Link-Document-blue.svg
-    :target: https://windtalker.readthedocs.io/en/latest/
+    :target: https://windtalker.readthedocs.io/
 
 .. image:: https://img.shields.io/badge/Link-API-blue.svg
-    :target: https://windtalker.readthedocs.io/en/latest/py-modindex.html
+    :target: https://windtalker.readthedocs.io/py-modindex.html
 
 .. image:: https://img.shields.io/badge/Link-Install-blue.svg
     :target: `install`_
@@ -79,7 +79,7 @@ ${HOME} directory:
 - MacOS: ``/Users/<username>``
 - Linux: ``/home/<username>``
 
-For more features and how to use RSA to encrypt your file or directory, please read `THIS <https://windtalker.readthedocs.io/index.html#table-of-content>`_
+For more features and how to use RSA to encrypt your file or directory, please read `THIS <https://windtalker.readthedocs.io/#table-of-content>`_
 
 
 .. _install:
