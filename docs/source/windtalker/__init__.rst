@@ -10,12 +10,10 @@ sub packages and modules
 .. toctree::
     :maxdepth: 1
 
+    api <api>
     asymmetric <asymmetric>
-    files <files>
-    _version <_version>
-    fingerprint <fingerprint>
-    symmetric <symmetric>
-    py23 <py23>
     cipher <cipher>
     exc <exc>
+    files <files>
+    symmetric <symmetric>
     

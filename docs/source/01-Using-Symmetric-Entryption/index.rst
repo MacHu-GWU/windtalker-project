@@ -63,8 +63,11 @@ Suppose you have a file ``MyBankAccount.txt`` to encrypt:
 
 	# Encryption, if output_path is not given, windtalker will automatically
 	# generate one with surfix "-encrypted" for you.
-	>>> cipher.encrypt_file("MyBankAccount.txt",
-	    output_path="MyBankAccount-encrypted.txt", overwrite=True)
+	>>> cipher.encrypt_file(
+	...     "MyBankAccount.txt",
+	...     output_path="MyBankAccount-encrypted.txt",
+	...     overwrite=True,
+	... )
 
 Then you will get a encrypted file ``MyBankAccount-encrypted.txt``, and the content looks like:
 
@@ -80,8 +83,11 @@ For decryption, you need to do:
 
 	# Decryption, view of your friend
 	>>> new_cipher = SymmtricCipher(password="MyPassword")
-	>>> new_cipher.decrypt_file("MyBankAccount-encrypted.txt",
-	    output_path="MyBankAccount-decrypted.txt", overwirte=True)
+	>>> new_cipher.decrypt_file(
+	...     "MyBankAccount-encrypted.txt",
+	...     output_path="MyBankAccount-decrypted.txt",
+	...     overwirte=True,
+	... )
 
 
 Encrypt/Decrypt a directory
@@ -104,9 +110,15 @@ The API is very similar to :meth:`~windtalker.cipher.BaseCipher.encrypt_file`:
 .. code-block:: python
 
 	# Encryption
-	>>> cipher.encrypt_dir("MySecretFolder",
-	    output_path="MySecretFolder-encrypted", overwirte=True)
+	>>> cipher.encrypt_dir(
+	...     "MySecretFolder",
+	...     output_path="MySecretFolder-encrypted",
+	...     overwirte=True,
+	... )
 
 	# Decryption
-	>>> cipher.decrypt_dir("MySecretFolder-encrypted",
-	    output_path="MySecretFolder-decrypted", overwirte=True)
+	>>> cipher.decrypt_dir(
+	...     "MySecretFolder-encrypted",
+	...     output_path="MySecretFolder-decrypted",
+	...     overwirte=True,
+	... )
