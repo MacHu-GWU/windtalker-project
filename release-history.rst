@@ -15,15 +15,17 @@ x.y.z (Backlog)
 **Miscellaneous**
 
 
-0.1.1 (2024-01-22)
+1.0.1 (2024-01-22)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 **Features and Improvements**
 
+- Drop support for 3.6, only support 3.7+
+
 **Minor Improvements**
 
-**Bugfixes**
-
-**Miscellaneous**
+- Improved documents.
+- Refactor entire code base (no API change) to make it more readable and
+  maintainable.
 
 
 0.0.8 (2021-02-01)
