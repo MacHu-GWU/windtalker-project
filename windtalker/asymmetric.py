@@ -37,7 +37,12 @@ class AsymmetricCipher(BaseCipher):
     _encrypt_chunk_size = 53
     _decrypt_chunk_size = 53
 
-    def __init__(self, my_pubkey, my_privkey, his_pubkey):
+    def __init__(
+        self,
+        my_pubkey,
+        my_privkey,
+        his_pubkey,
+    ):
         self.my_pubkey = my_pubkey
         self.my_privkey = my_privkey
         self.his_pubkey = his_pubkey
@@ -60,7 +65,7 @@ class AsymmetricCipher(BaseCipher):
         use_sign: bool = True,
         sign_method: str = "SHA-256",
         *args,
-        **kwargs
+        **kwargs,
     ) -> bytes:
         """
         Encrypt binary data.
@@ -79,7 +84,11 @@ class AsymmetricCipher(BaseCipher):
         return token
 
     def decrypt(
-        self, token: bytes, signature: T.Optional[bytes] = None, *args, **kwargs
+        self,
+        token: bytes,
+        signature: T.Optional[bytes] = None,
+        *args,
+        **kwargs,
     ) -> bytes:
         """
         Decrypt binary data.

@@ -96,7 +96,7 @@ class BaseCipher:
         overwrite: bool = False,
         stream: bool = True,
         enable_verbose: bool = True,
-        **kwargs
+        **kwargs,
     ):
         """
         Encrypt a file. If output_path are not given, then try to use the
@@ -141,7 +141,7 @@ class BaseCipher:
         overwrite: bool = False,
         stream: bool = True,
         enable_verbose: bool = True,
-        **kwargs
+        **kwargs,
     ):
         """
         Decrypt a file. If output_path are not given, then try to use the

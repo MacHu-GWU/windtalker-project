@@ -55,9 +55,9 @@ Encrypt/Decrypt a file
 -------------------------------------------------------------------------------
 Suppose you have a file ``MyBankAccount.txt`` to encrypt:
 
-.. image:: _static/secret_file_before.png
+.. image:: ./secret_file_before.png
 
-.. image:: _static/secret_file_before_content.png
+.. image:: ./secret_file_before_content.png
 
 .. code-block:: python
 
@@ -71,9 +71,9 @@ Suppose you have a file ``MyBankAccount.txt`` to encrypt:
 
 Then you will get a encrypted file ``MyBankAccount-encrypted.txt``, and the content looks like:
 
-.. image:: _static/secret_file_after.png
+.. image:: ./secret_file_after.png
 
-.. image:: _static/secret_file_after_content.png
+.. image:: ./secret_file_after_content.png
 
 Notice: if ``overwirte`` keyword is ``True``, then it will silently overwrite the output file if it exists. By default, it's ``False``.
 
@@ -101,9 +101,9 @@ First solution is exactly the same to **Encrypt/Decrypt a File**, I only show ho
 
 For example if you have ``MySecretFolder`` to encrypt:
 
-.. image:: _static/secret_directory_before1.png
+.. image:: ./secret_directory_before1.png
 
-.. image:: _static/secret_directory_before2.png
+.. image:: ./secret_directory_before2.png
 
 The API is very similar to :meth:`~windtalker.cipher.BaseCipher.encrypt_file`:
 
